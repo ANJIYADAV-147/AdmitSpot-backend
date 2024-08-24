@@ -1,0 +1,28 @@
+### Create a New Post
+POST http://localhost:3004/posts
+Content-Type: application/json
+
+{
+  "title": "Introduction to Node.js",
+  "content": "Learn the basics of Node.js, Express, and SQLite."
+}
+
+
+
+### Read All Posts
+GET http://localhost:3004/posts
+
+### Read a Specific Post by ID
+GET http://localhost:3004/posts/1
+
+
+
+### Update a Post by ID
+PUT http://localhost:3004/posts/1
+Content-Type: application/json
+
+{
+  "title": "Updated Node.js Post",
+  "content": "Updated content for Node.js basics."
+}
+
