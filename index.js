@@ -71,7 +71,7 @@ app.get('/posts', async (request, response) => {
 app.get('/posts/:id', async (request, response) => {
     const postId = request.params.id;
     try {
-        const post = await Post.findByPk(postId);  // Corrected 'taskId' to 'postId'
+        const post = await Post.findByPk(postId);  
         if (post) {
             response.json(post);
         } else {
@@ -87,7 +87,7 @@ app.get('/posts/:id', async (request, response) => {
 app.put('/posts/:id', async (request, response) => {
     const postId = request.params.id;
     try {
-        const [updatedRows] = await Post.update({  // Corrected 'Posts' to 'Post'
+        const [updatedRows] = await Post.update({  
             title: request.body.title,
             content: request.body.content,
         },
@@ -104,6 +104,37 @@ app.put('/posts/:id', async (request, response) => {
         response.status(500).json({ error: 'Internal Server Error' });
     }
 });
+
+// Delete a task by ID
+app.delete('/posts/:id', async (request, response) => {
+    const postId = req.params.id;
+  
+    try {
+      const deletedRows = await Post.destroy({
+        where: { id: postId },
+      });
+  
+      if (deletedRows > 0) {
+        res.json({ message: 'Task deleted successfully' });
+      } else {
+        res.status(404).json({ error: 'Task not found' });
+      }
+    } catch (err) {
+      console.error('Error deleting task by ID:', err);
+      res.status(500).json({ error: 'Internal Server Error' });
+    }
+  });
+  
+  // Error handling middleware for routes that do not exist
+  app.use((req, res) => {
+    res.status(404).json({ error: 'Not Found' });
+  });
+  
+  // Global error handling middleware
+  app.use((err, req, res, next) => {
+    console.error(err);
+    res.status(500).json({ error: 'Internal Server Error' });
+  });
 
 // Start the server
 app.listen(port, () => {
