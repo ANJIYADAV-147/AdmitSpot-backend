@@ -107,7 +107,7 @@ app.put('/posts/:id', async (request, response) => {
 
 // Delete a task by ID
 app.delete('/posts/:id', async (request, response) => {
-    const postId = req.params.id;
+    const postId = request.params.id;
   
     try {
       const deletedRows = await Post.destroy({
@@ -115,13 +115,13 @@ app.delete('/posts/:id', async (request, response) => {
       });
   
       if (deletedRows > 0) {
-        res.json({ message: 'Task deleted successfully' });
+        response.json({ message: 'Task deleted successfully' });
       } else {
-        res.status(404).json({ error: 'Task not found' });
+        response.status(404).json({ error: 'Task not found' });
       }
     } catch (err) {
       console.error('Error deleting task by ID:', err);
-      res.status(500).json({ error: 'Internal Server Error' });
+      response.status(500).json({ error: 'Internal Server Error' });
     }
   });
   
